@@ -1,0 +1,150 @@
+name: mpv-casept
+version: '0.24.0'
+summary: YouTube Downloader. READ FULL DESCRIPTION TO DOWNLOAD TO EXTERNAL STORAGE.
+description: |
+  youtube-dl is a small command-line program to download videos from
+  YouTube.com and a few more sites. This is an unofficial snap based on the one in the snappy playpen.
+  If you wish to download videos to external storage you have to run
+  sudo snap connect youtube-dl-casept:removable-media core:removable-media
+  after installation
+
+grade: stable 
+confinement: strict
+
+apps:
+  mpv:
+    command: desktop-launch $SNAP/usr/local/bin/mpv
+    plugs: [x11, opengl, unity7, pulseaudio, home, network, removable-media, optical-drive]
+
+parts:
+  youtube-dl:
+    source: https://github.com/rg3/youtube-dl/archive/2017.04.03.tar.gz 
+    plugin: python
+    python-version: python3
+    after: [ffmpeg]
+  mpv:
+    source: https://github.com/mpv-player/mpv/archive/v0.24.0.tar.gz
+    plugin: waf
+    prepare: |
+      ./bootstrap.py
+    stage-packages:
+      - libasound2
+      - libass5
+      - libatomic1
+      - libbluray1
+      - libc6
+      - libcdio-cdda1
+      - libcdio-paranoia1 
+      - libcdio13
+      - libdrm2
+      - libdvdnav4
+      - libdvdread4
+      - libegl1-mesa 
+      - libgbm1 
+      - libgl1-mesa-glx
+      - libjack-jackd2-0
+      - libjpeg8
+      - liblcms2-2
+      - liblua5.2-0
+      - libpulse0
+      - librubberband2v5
+      - libsdl2-2.0-0
+      - libsmbclient
+      - libsndio6.1
+      - libuchardet0
+      - libv4l-0
+      - libva-drm1 
+      - libva-wayland1
+      - libva-x11-1 
+      - libva1
+      - libvdpau1
+      - libwayland-client0 
+      - libwayland-cursor0
+      - libwayland-egl1-mesa 
+      - libx11-6
+      - libxext6
+      - libxinerama1
+      - libxkbcommon0
+      - libxrandr2
+      - libxss1
+      - libxv1
+      - zlib1g
+    build-packages:  
+      - build-essential
+      - libasound2-dev
+      - libass-dev
+      - libbluray-dev
+      - libcdio-paranoia-dev
+      - libdvdnav-dev
+      - libdvdread-dev
+      - libegl1-mesa-dev
+      - libenca-dev
+      - libgbm-dev
+      - libgl1-mesa-dev
+      - libguess-dev
+      - libjack-dev
+      - libjpeg-dev
+      - liblcms2-dev
+      - liblua5.2-dev
+      - libpulse-dev
+      - librubberband-dev
+      - libsdl2-dev
+      - libsmbclient-dev
+      - libsndio-dev
+      - libswscale-dev
+      - libuchardet-dev
+      - libv4l-dev
+      - libva-dev
+      - libvdpau-dev
+      - libwayland-dev
+      - libx11-dev
+      - libxinerama-dev
+      - libxkbcommon-dev
+      - libxrandr-dev
+      - libxss-dev
+      - libxv-dev
+      - pkg-config
+      - python
+      - python-docutils
+    after:
+      - desktop-glib-only
+      - ffmpeg
+      - youtube-dl
+
+  ffmpeg:
+    source: https://ffmpeg.org/releases/ffmpeg-3.2.4.tar.xz 
+    plugin: autotools
+    configflags: [--enable-gpl, --enable-libass, --enable-libfreetype, --enable-libmp3lame, --enable-libopus, --enable-libtheora, --enable-libvorbis, --enable-libvpx, --enable-libx264, --enable-libx265, --enable-openssl, --enable-nonfree]
+    build-packages:
+      - git
+      - g++
+      - make
+      - yasm
+      - autoconf
+      - libtool
+      - cmake
+      - pkg-config
+      - automake
+      - build-essential
+      - libass-dev
+      - libfreetype6-dev
+      - libsdl1.2-dev
+      - libtheora-dev
+      - libva-dev
+      - libvdpau-dev
+      - libvorbis-dev
+      - libxcb1-dev
+      - libxcb-shm0-dev
+      - libxcb-xfixes0-dev
+      - texinfo
+      - zlib1g-dev
+      - libx264-dev
+      - libmp3lame-dev
+      - libopus-dev
+      - libx265-dev
+      - libvpx-dev
+      - openssl
+    stage-packages:
+      - libssl-dev
+    organize:
+      usr/local/bin: usr/bin
