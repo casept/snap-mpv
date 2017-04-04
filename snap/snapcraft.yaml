@@ -1,12 +1,10 @@
 name: mpv-casept
 version: '0.24.0'
-summary: YouTube Downloader. READ FULL DESCRIPTION TO DOWNLOAD TO EXTERNAL STORAGE.
+summary: a free, open source, and cross-platform media player. Unofficial snap. 
 description: |
-  youtube-dl is a small command-line program to download videos from
-  YouTube.com and a few more sites. This is an unofficial snap based on the one in the snappy playpen.
-  If you wish to download videos to external storage you have to run
-  sudo snap connect youtube-dl-casept:removable-media core:removable-media
-  after installation
+  mpv is a media player based on MPlayer and mplayer2.
+  It supports a wide variety of video file formats,
+  audio and video codecs, and subtitle types.
 
 grade: stable 
 confinement: strict
